@@ -1,0 +1,17 @@
+
+.repliesButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+
+.buttonText {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+@media all and (min-width: 1024px) {
+
+}

@@ -1,0 +1,29 @@
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding-top: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+}
+
+.rigthGroupButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  
+}
+
+
+
+@media all and (min-width: 1024px) {
+  .buttonContainer {
+    width: 70%;
+    justify-content: flex-start;
+    padding-left: 5px;
+  }
+  .karmaCounter {
+    display: none;
+  }
+}

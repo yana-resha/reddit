@@ -1,0 +1,18 @@
+.complainButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.buttonText {
+  display: none;
+}
+
+@media all and (min-width: 1024px) {
+
+  .buttonText {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
