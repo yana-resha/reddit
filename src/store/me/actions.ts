@@ -42,11 +42,10 @@ export const meRequestError: ActionCreator<MeRequestErrorAction> = (error: strin
 })
 
 export const meRequestAsync = (): ThunkAction<void, RootState, unknown, Action<string>> => (dispatch, getState) => {
-  
-  if (getState().token.token.length > 0 && getState().token.token !== 'undefined') {
+  if (localStorage.getItem('token') != null) {
     dispatch(meRequest());
     axios.get('https://oauth.reddit.com/api/v1/me/', {
-      headers: { Authorization: `bearer ${getState().token.token}` },
+      headers: { Authorization: `bearer ${localStorage.getItem('token')}` },
     })
     .then((resp) => {
       const userData = resp.data;

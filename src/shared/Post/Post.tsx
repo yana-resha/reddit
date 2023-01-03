@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import { useSelector } from 'react-redux';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import { RootState } from '../../store/reducer';
 import { CommentBlock } from '../CommentBlock';
 import { CommentFormContainer } from '../CommentFormContainer';
 import styles from './post.css';
@@ -10,12 +13,18 @@ interface IPost {
 
 export function Post(props: IPost) {
 
+  const {id} = useParams();
   const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let postList = useSelector<RootState, any>(state => state.posts.data);
+  let post = postList.filter((el: { postID: string; }) => el.postID == id);
 
   useEffect(() => {
     function handleClick (event: MouseEvent) {
       if (event.target instanceof Node && !ref.current?.contains(event.target)) {
-        props.onClose?.();
+        navigate('/posts')
       }
     }
     document.addEventListener('click', handleClick)
@@ -30,7 +39,7 @@ export function Post(props: IPost) {
 
   return ReactDOM.createPortal((
     <div className={styles.modal} ref={ref}>
-      <h2>Какой то заголовок</h2>
+      <h2>{post[0].postTitle}</h2>
 
       <div className={styles.content}>
         <p>Текст</p>
@@ -39,8 +48,7 @@ export function Post(props: IPost) {
       </div>
       
       <CommentFormContainer/>
-      
-      <CommentBlock />
+      <CommentBlock id={id}/>
     </div>
   ), node)
 }

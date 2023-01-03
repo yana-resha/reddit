@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
-import { useCommentsList } from '../../../hooks/useCommentsList';
-import { CommentContextProvider } from '../../Context/commentContext';
-import { commentList } from '../../Context/commentListProvider';
-import { postsContext } from '../../Context/postsContext';
-import { ICardListPosts } from '../CardsList';
+import { useSelector } from 'react-redux';
 import styles from './card.css';
 import { Controls } from './Controls';
 import { Menu } from './Menu';
 import { Preview } from './Preview';
 import { TextContent } from './TextContent';
+import { IComments } from '../../../store/posts/actions';
+import { RootState } from '../../../store/reducer';
 
 
 export interface ICardPost {
@@ -22,26 +20,20 @@ export interface ICardPost {
   postID:string;
   karmaCount: number;
   subreddit:string;
+  comments: IComments[];
 }
 
-export interface IComments {
-  author?:string;
-  commentText?:string;
-  created?:number;
-  id?:string;
-  parent_id?:string;
-  ups?:number;
-  replies?: IComments[];
-}
-      
+  
 export function Card(obj:ICardPost){
-  const commentsList:IComments[] = useContext(commentList)
-  let commentsCount;
-  if (commentsList.length > 0) {
-    commentsCount = commentsList.length;
-  }
+
+  let post = useSelector<RootState, any>(state => state.posts.data);
+  const commentsCount = post.filter((el: { postID: string; }) => el.postID == obj.postID)[0].comments.length;
+  //const commentsList:any =  useSelector<RootState, string>();
+  // let commentsCount;
+  // if (commentsList.length > 0) {
+  //   commentsCount = commentsList.length;
+  // }
   return (
-    <CommentContextProvider author={obj.author}>
       <li className={styles.card}>
         <TextContent         
         {...obj}/>
@@ -49,7 +41,7 @@ export function Card(obj:ICardPost){
         <Menu postID={obj.postID} />
         <Controls karmaCount={obj.karmaCount} commentsCount={commentsCount}/>
       </li>
-    </CommentContextProvider>
+
   );
 }
 

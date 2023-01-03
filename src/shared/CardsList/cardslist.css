@@ -3,3 +3,8 @@
     padding: 40px 0;
   }
 }
+
+.buttonLoad {
+  padding: 17px 32px;
+  border: 1px solid rgba(217, 217, 217, 1);
+ }

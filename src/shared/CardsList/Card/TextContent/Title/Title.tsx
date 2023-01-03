@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Post } from '../../../../Post';
 import styles from './title.css';
-import {IComments} from '../../Card'
+import {Link, Route, Routes} from 'react-router-dom'
 
 interface ITitleInterface {
   postTitle: string;
@@ -12,17 +12,11 @@ interface ITitleInterface {
 
 export function Title({postTitle, postLink, postID, subreddit}:ITitleInterface) {
 
-
   const [isModalOpened, setIsModalOpen] = useState(false)
 
   return (
     <h2 className={styles.title}>
-      <a href={'#url'}className={styles.postLink} onClick={() => {setIsModalOpen(true)}}>{postTitle}</a>
-      {isModalOpened && (
-        
-        <Post 
-          onClose={() => { setIsModalOpen(false); } }/>
-      )}
+      <Link to={`/posts/${postID}`} className={styles.postLink}>{postTitle}</Link>
     </h2>
   );
 }

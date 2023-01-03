@@ -30,7 +30,7 @@ export function CommentForm({value}: IForm) {
     <form className={styles.form} onSubmit = {handleSubmit(onSubmit)} >
       <textarea className={styles.input}
       {...register("comment", {
-        // required: "this is a required",
+        required: "Введите больше 3-x символов",
         minLength: {
           value: 3,
           message: "Введите больше 3-x символов"

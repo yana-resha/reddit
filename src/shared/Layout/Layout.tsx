@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useToken } from '../../hooks/useToken';
+import { useNavigate } from 'react-router-dom';
 import styles from './layout.css';
 
 interface ILayoutProps {
@@ -7,9 +7,21 @@ interface ILayoutProps {
 }
 
 export function Layout({children}: ILayoutProps) {
+  const token = localStorage.getItem('token');
+  const navigate = useNavigate();
+  
+
+  useEffect(() => { 
+    // navigate('/posts');
+  }, [])
+
+ 
+
   return (
     <div className={styles.layout}>
       {children}
     </div>
   );
 }
+
+

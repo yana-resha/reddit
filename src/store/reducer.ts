@@ -4,22 +4,27 @@ import {  tokenReducer, tokenState } from "./token/reducer";
 import { MeRequestAction, MeRequestErrorAction, MeRequestSuccessAction, ME_REQUEST, ME_REQUEST_ERROR, ME_REQUEST_SUCCESS } from "./me/actions";
 import { meReducer, MeState } from "./me/reducer";
 import { TokenRequestAction, TokenRequestErrorAction, TokenRequestSuccessAction, TOKEN_REQUEST, TOKEN_REQUEST_ERROR, TOKEN_REQUEST_SUCCESS } from "./token/actions";
+import { PostsRequestAction, PostsRequestErrorAction, PostsRequestSuccessAction, POSTS_REQUEST, POSTS_REQUEST_ERROR, POSTS_REQUEST_SUCCESS } from "./posts/actions";
+import { postsReducer, PostsState } from "./posts/reducer";
 
 
 
 
 
 export type RootState = {
+  state: any;
   commentText : string;
   me: MeState;
-  token: tokenState
+  token: tokenState;
+  posts: PostsState;
 }
 
+ //@ts-ignore
 const initialState:RootState = {
   commentText: 'Привет!',
-  me: {loading: false, error: '', data: {}},
-  token: {loading: false, error: '', token: ''}
-  
+  me: { loading: false, error: '', data: {} },
+  token: { loading: false, error: '', token: '' },
+  posts: { loading: false, error: '', data: [], after: '', load: 0 },
 }
 
 const UPDATE_COMMENT = 'UPDATE_COMMENT';
@@ -46,6 +51,9 @@ type MyAction = UpdateCommentAction
  | TokenRequestAction
  | TokenRequestSuccessAction
  | TokenRequestErrorAction 
+ | PostsRequestAction
+ | PostsRequestSuccessAction
+ | PostsRequestErrorAction 
 
 
 export const rootReducer:Reducer<RootState, MyAction> = (state = initialState, action) => {
@@ -68,6 +76,13 @@ export const rootReducer:Reducer<RootState, MyAction> = (state = initialState, a
             return {
               ...state,
               token: tokenReducer(state.token, action)
+            }
+        case POSTS_REQUEST:
+          case POSTS_REQUEST_SUCCESS:
+          case POSTS_REQUEST_ERROR:
+            return {
+              ...state,
+              posts: postsReducer(state.posts, action)
             }
         default:
           return state;
